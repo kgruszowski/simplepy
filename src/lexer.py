@@ -7,10 +7,11 @@ tokens = [
     'GT', 'GTE', 'LT', 'LTE', 'EQ', 'NEQ', 'TRUE', 'FALSE',
     'COLON', 'COMMA',
     'LPAREN', 'RPAREN', 'LBRACK', 'RBRACK', 'LSQBRACK', 'RSQBRACK',
-    'INDENT'
+    'INDENT', 'NEWLINE'
 ]
 
 reserved = {
+    'print': 'PRINT',
     'def': 'DEF',
     'return': 'RETURN',
 
@@ -49,6 +50,7 @@ t_NEQ = r'\!='
 t_COLON = r'\:'
 t_COMMA = r'\,'
 t_INDENT = r'\|'
+t_NEWLINE = r'\n'
 
 def t_TRUE(t):
     'true'
@@ -86,11 +88,6 @@ def t_STRING(t):
     return t
 
 
-def t_newline(t):
-    r'\n'
-    t.lexer.lineno += t.value.count("\n")
-
-
 def t_error(t):
     print("Illegal character '%s' at line '%d'" % (t.value[0], t.lexer.lineno))
     t.lexer.skip(1)
@@ -98,7 +95,7 @@ def t_error(t):
 
 lexer = lex.lex()
 input = '''
-a = [1, 5, 10, 50]
+a = [1, 5, 10, 50]\n
 b = {name: 'Kamil', age: 15}
 '''
 lexer.input(input)
