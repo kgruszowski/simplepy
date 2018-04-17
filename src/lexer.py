@@ -1,7 +1,7 @@
 import ply.lex as lex
 
 tokens = [
-    'ID',
+    'NAME',
     'INT', 'FLOAT', 'STRING',
     'PLUS', 'MINUS', 'TIMES', 'DIVIDE', 'MOD', 'ASSIGN',
     'GT', 'GTE', 'LT', 'LTE', 'EQ', 'NEQ', 'TRUE', 'FALSE',
@@ -53,20 +53,20 @@ t_INDENT = r'\|'
 t_NEWLINE = r'\n'
 
 def t_TRUE(t):
-    'true'
+    'True'
     t.value = True
     return t
 
 
 def t_FALSE(t):
-    'false'
+    'False'
     t.value = False
     return t
 
 
-def t_ID(t):
+def t_NAME(t):
     r'[a-zA-Z_][a-zA-Z_0-9]*'
-    t.type = reserved.get(t.value, 'ID')  # Check for reserved words
+    t.type = reserved.get(t.value, 'NAME')  # Check for reserved words
     return t
 
 
@@ -94,10 +94,10 @@ def t_error(t):
 
 
 lexer = lex.lex()
-input = '''
-a = [1, 5, 10, 50]\n
-b = {name: 'Kamil', age: 15}
-'''
-lexer.input(input)
-for token in lexer:
-    print('line %d: %s(%s)' %(token.lineno, token.type, token.value))
+# input = '''
+# a = [1, 5, 10, 50]\n
+# b = {name: 'Kamil', age: 15}
+# '''
+# lexer.input(input)
+# for token in lexer:
+#     print('line %d: %s(%s)' %(token.lineno, token.type, token.value))

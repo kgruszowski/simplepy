@@ -102,3 +102,7 @@ ENV/
 
 # pycharm
 .idea/
+
+#ply
+parser.out
+parsetab.py
