@@ -7,13 +7,15 @@ tokens = [
     'GT', 'GTE', 'LT', 'LTE', 'EQ', 'NEQ', 'TRUE', 'FALSE',
     'COLON', 'COMMA',
     'LPAREN', 'RPAREN', 'LBRACK', 'RBRACK', 'LSQBRACK', 'RSQBRACK',
-    'INDENT', 'NEWLINE'
+    'NEWLINE'
 ]
 
 reserved = {
     'print': 'PRINT',
     'def': 'DEF',
     'return': 'RETURN',
+    'break': 'BREAK',
+    'continue': 'CONTINUE',
 
     'if': 'IF',
     'else': 'ELSE',
@@ -49,7 +51,6 @@ t_EQ = r'\=='
 t_NEQ = r'\!='
 t_COLON = r'\:'
 t_COMMA = r'\,'
-t_INDENT = r'\|'
 t_NEWLINE = r'\n'
 
 def t_TRUE(t):
@@ -94,10 +95,3 @@ def t_error(t):
 
 
 lexer = lex.lex()
-# input = '''
-# a = [1, 5, 10, 50]\n
-# b = {name: 'Kamil', age: 15}
-# '''
-# lexer.input(input)
-# for token in lexer:
-#     print('line %d: %s(%s)' %(token.lineno, token.type, token.value))

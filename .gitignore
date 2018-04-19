@@ -106,3 +106,4 @@ ENV/
 #ply
 parser.out
 parsetab.py
+parselog.txt
