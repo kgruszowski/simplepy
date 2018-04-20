@@ -126,10 +126,6 @@ def p_expr(p):
     '''
     pass
 
-def p_expr_group(p):
-    '''expr : LPAREN expr RPAREN
-    '''
-
 # factor: ('+'|'-'|'~') factor | power
 def p_factor(p):
     '''factor : PLUS factor
