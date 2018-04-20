@@ -1,16 +1,29 @@
+import sys
 import ply.yacc as yacc
 from lexer import *
+
+
+def p_stmt_list(p):
+    '''stmt_list : stmt stmt_list
+                | stmt
+    '''
+    pass
 
 
 def p_stmt(p):
     '''stmt : simple_stmt
             | compound_stmt
+            | NEWLINE
     '''
     pass
 
 
 def p_compound_stmt(p):
-    '''compound_stmt : if_stmt NEWLINE'''
+    '''compound_stmt : if_stmt
+                    | while_stmt
+                    | print
+    '''
+    pass
 
 
 def p_simple_stmt(p):
@@ -26,6 +39,10 @@ def p_small_stmt(p):
     pass
 
 
+def p_print(p):
+    '''print : PRINT LPAREN small_stmt RPAREN'''
+    pass
+
 
 def p_flow_stmt(p):
     '''flow_stmt : RETURN
@@ -34,16 +51,24 @@ def p_flow_stmt(p):
     '''
     pass
 
-# def p_compound_stmt(p):
+
+def p_while_stmt(p):
+    '''while_stmt : WHILE test COLON suite
+                | WHILE test COLON suite ELSE COLON suite
+    '''
+    pass
+
 
 def p_if_stmt(p):
-    '''if_stmt : IF test COLON suite'''
+    '''if_stmt : IF test COLON suite
+                | IF test COLON suite ELSE COLON suite
+    '''
     pass
 
 
 def p_suite(p):
     '''suite : simple_stmt
-            | LBRACK NEWLINE stmt RBRACK
+            | LBRACK NEWLINE stmt_list RBRACK
     '''
     pass
 
@@ -82,19 +107,28 @@ def p_comp_op(p):
             | EQ
             | NEQ
     '''
+    pass
 
+
+def p_assign_expr(p):
+    '''expr : NAME ASSIGN expr'''
+    pass
 
 # arith_expr: term (('+'|'-') term)*
 # term: factor (('*'|'@'|'/'|'%'|'//') factor)*
 def p_expr(p):
-    '''expr : factor PLUS factor
-            | factor MINUS factor
-            | factor TIMES factor
-            | factor DIVIDE factor
+    '''expr : factor PLUS expr
+            | factor MINUS expr
+            | factor TIMES expr
+            | factor DIVIDE expr
+            | factor MOD expr
             | factor
     '''
     pass
 
+def p_expr_group(p):
+    '''expr : LPAREN expr RPAREN
+    '''
 
 # factor: ('+'|'-'|'~') factor | power
 def p_factor(p):
@@ -169,10 +203,11 @@ log = logging.getLogger()
 
 parser = yacc.yacc()
 
-s = '''if a < c: {
-if d > 10: {
-'asd'
-}
-}
-'''
-result = parser.parse(s, debug=log)
+
+if len(sys.argv) == 1:
+    print("Usage: python3 %s filename" % __file__)
+else:
+    with open('../example/{}'.format(sys.argv[1]), 'r') as content_file:
+        file_input = content_file.read()
+
+    result = parser.parse(file_input, debug=log)

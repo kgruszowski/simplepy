@@ -23,8 +23,6 @@ reserved = {
     'or': 'OR',
     'not': 'NOT',
 
-    'for': 'FOR',
-    'in': 'IN',
     'while': 'WHILE'
 }
 
@@ -35,7 +33,7 @@ t_PLUS = r'\+'
 t_MINUS = r'-'
 t_TIMES = r'\*'
 t_DIVIDE = r'/'
-t_MOD = '%'
+t_MOD = r'%'
 t_ASSIGN = r'='
 t_LPAREN = r'\('
 t_RPAREN = r'\)'

@@ -1,0 +1,11 @@
+a = 0
+
+while a < 100: {
+    if a % 2 == 0: {
+        print('odd')
+    } else: {
+        print('even')
+    }
+}
+
+a = {id: 'KAM45', name: 'Kamil', age: 24}
