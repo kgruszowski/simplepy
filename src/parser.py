@@ -9,7 +9,7 @@ def p_stmt_list(p):
     '''
     pass
 
-
+# stmt: simple_stmt | compound_stmt
 def p_stmt(p):
     '''stmt : simple_stmt
             | compound_stmt
@@ -18,6 +18,7 @@ def p_stmt(p):
     pass
 
 
+# compound_stmt: if_stmt | while_stmt | for_stmt | try_stmt | with_stmt | funcdef | classdef | decorated | async_stmt
 def p_compound_stmt(p):
     '''compound_stmt : if_stmt
                     | while_stmt
@@ -26,12 +27,15 @@ def p_compound_stmt(p):
     pass
 
 
+# simple_stmt: small_stmt (';' small_stmt)* [';'] NEWLINE
 def p_simple_stmt(p):
     '''simple_stmt : small_stmt NEWLINE
     '''
     pass
 
 
+#small_stmt: (expr_stmt | del_stmt | pass_stmt | flow_stmt |
+#             import_stmt | global_stmt | nonlocal_stmt | assert_stmt)
 def p_small_stmt(p):
     '''small_stmt : test
                 | flow_stmt
@@ -44,6 +48,7 @@ def p_print(p):
     pass
 
 
+# flow_stmt: break_stmt | continue_stmt | return_stmt | raise_stmt | yield_stmt
 def p_flow_stmt(p):
     '''flow_stmt : RETURN
                 | BREAK
@@ -52,6 +57,7 @@ def p_flow_stmt(p):
     pass
 
 
+# while_stmt: 'while' test ':' suite ['else' ':' suite]
 def p_while_stmt(p):
     '''while_stmt : WHILE test COLON suite
                 | WHILE test COLON suite ELSE COLON suite
@@ -59,6 +65,7 @@ def p_while_stmt(p):
     pass
 
 
+# if_stmt: 'if' test ':' suite ('elif' test ':' suite)* ['else' ':' suite]
 def p_if_stmt(p):
     '''if_stmt : IF test COLON suite
                 | IF test COLON suite ELSE COLON suite
