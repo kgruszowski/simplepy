@@ -1,8 +1,9 @@
 import ast
 
-ast.NameConstant
+ast.Tuple
 
 tree = ast.parse('''
-False
+a = 10
+b = 15
 ''')
 print(ast.dump(tree, annotate_fields=False))

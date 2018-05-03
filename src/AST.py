@@ -62,6 +62,24 @@ class BinOp(Node):
         self.op = op
 
 
+class List(Node):
+    def __init__(self, values):
+        self.values = values
+
+
+class Tuple(Node):
+    def __init__(self, values):
+        self.values = values
+
+
+class ExprList(Node):
+    def __init__(self):
+        self.expression_list = []
+
+    def add_expr_list(self, expression_list):
+        self.expression_list.append(expression_list)
+
+
 class Const(Node):
     def __init__(self, value):
         self.type = 'const'

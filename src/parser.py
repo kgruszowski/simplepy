@@ -15,15 +15,16 @@ def p_program(p):
 
 
 def p_stmt_list(p):
-    '''stmt_list : stmt stmt_list
+    '''stmt_list : stmt_list stmt
                 | stmt
     '''
-    if len(p) == 3:
-        p[0] = AST.StatementList()
-        p[0].add_statement(p[2])
-    else:
+    if len(p) == 2:
         p[0] = AST.StatementList()
         p[0].add_statement(p[1])
+    else:
+        p[1].add_statement(p[2])
+        p[0] = p[1]
+
 
 # stmt: simple_stmt | compound_stmt
 def p_stmt(p):
@@ -50,7 +51,7 @@ def p_simple_stmt(p):
     p[0] = p[1]
 
 
-#small_stmt: (expr_stmt | del_stmt | pass_stmt | flow_stmt |
+# small_stmt: (expr_stmt | del_stmt | pass_stmt | flow_stmt |
 #             import_stmt | global_stmt | nonlocal_stmt | assert_stmt)
 def p_small_stmt(p):
     '''small_stmt : test
@@ -160,6 +161,7 @@ def p_expr(p):
     else:
         p[0] = p[1]
 
+
 # factor: ('+'|'-'|'~') factor | power
 def p_factor(p):
     '''factor : PLUS factor
@@ -195,16 +197,25 @@ def p_atom(p):
             p[0] = p[1]
         else:
             p[0] = AST.Const(p[1])
+    elif p[1] == '(':
+        p[0] = AST.Tuple(p[1])
+    elif p[1] == '[':
+        p[0] = AST.List(p[1])
     else:
         p[0] = p[1]
 
 
 # testlist_comp: (test|star_expr) ( comp_for | (',' (test|star_expr))* [','] )
 def p_list_expr(p):
-    '''list_expr : atom_expr COMMA list_expr
+    '''list_expr : list_expr COMMA atom_expr
                 | atom_expr
     '''
-    pass
+    if len(p) == 2:
+        p[0] = AST.ExprList()
+        p[0].add_expr_list(p[1])
+    else:
+        p[1].add_expr_list(p[3])
+        p[0] = p[1]
 
 
 # dictorsetmaker: ( ((test ':' test | '**' expr)
