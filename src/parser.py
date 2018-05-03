@@ -1,13 +1,30 @@
 import sys
 import ply.yacc as yacc
 from lexer import *
+import AST
+
+precedence = (
+    ('nonassoc', 'LT', 'GT', 'LTE', 'GTE'),
+    ('left', 'NOT'),
+    ('left', 'PLUS', 'MINUS'),
+    ('left', 'TIMES', 'DIVIDE')
+)
+
+def p_program(p):
+    '''program : stmt_list'''
+    p[0] = AST.Module(p[1])
 
 
 def p_stmt_list(p):
     '''stmt_list : stmt stmt_list
                 | stmt
     '''
-    pass
+    if len(p) == 3:
+        p[0] = AST.StatementList()
+        p[0].add_statement(p[2])
+    else:
+        p[0] = AST.StatementList()
+        p[0].add_statement(p[1])
 
 
 def p_stmt(p):
@@ -15,7 +32,7 @@ def p_stmt(p):
             | compound_stmt
             | NEWLINE
     '''
-    pass
+    p[0] = p[1]
 
 
 def p_compound_stmt(p):
@@ -23,20 +40,20 @@ def p_compound_stmt(p):
                     | while_stmt
                     | print
     '''
-    pass
+    p[0] = p[1]
 
 
 def p_simple_stmt(p):
     '''simple_stmt : small_stmt NEWLINE
     '''
-    pass
+    p[0] = p[1]
 
 
 def p_small_stmt(p):
     '''small_stmt : test
                 | flow_stmt
     '''
-    pass
+    p[0] = p[1]
 
 
 def p_print(p):
@@ -49,45 +66,50 @@ def p_flow_stmt(p):
                 | BREAK
                 | CONTINUE
     '''
-    pass
+    p[0] = p[1]
 
 
 def p_while_stmt(p):
     '''while_stmt : WHILE test COLON suite
                 | WHILE test COLON suite ELSE COLON suite
     '''
-    pass
+    if len(p) == 5:
+        p[0] = AST.While(p[2], p[4], [])
+    else:
+        p[0] = AST.While(p[2], p[4], p[7])
 
 
 def p_if_stmt(p):
     '''if_stmt : IF test COLON suite
                 | IF test COLON suite ELSE COLON suite
     '''
-    pass
+    if len(p) == 5:
+        p[0] = AST.If(p[2], p[4], [])
+    else:
+        p[0] = AST.If(p[2], p[4], p[7])
 
 
 def p_suite(p):
     '''suite : simple_stmt
             | LBRACK NEWLINE stmt_list RBRACK
     '''
-    pass
+    if len(p) == 2:
+        p[0] = p[1]
+    else:
+        p[0] = p[3]
 
 
 # or_test: and_test ('or' and_test)*
 # and_test: not_test ('and' not_test)*
 def p_test(p):
-    '''test : OR not_test
-            | AND not_test
-            | not_test
+    '''test : comparison OR test
+            | comparison AND test
+            | comparison
     '''
-    pass
-
-
-# 'not' not_test | comparison
-def p_not_test(p):
-    '''not_test : NOT not_test
-                | comparison'''
-    pass
+    if len(p) == 4:
+        p[0] = AST.BoolOp(p[2], p[1], p[3])
+    else:
+        p[0] = p[1]
 
 
 # comparison: expr(comp_op expr) *
@@ -95,7 +117,10 @@ def p_comparison(p):
     '''comparison : expr comp_op expr
                 | expr
     '''
-    pass
+    if len(p) == 4:
+        p[0] = AST.Compare(p[1], p[2], p[3])
+    else:
+        p[0] = p[1]
 
 
 # comp_op: '<'|'>'|'=='|'>='|'<='|'<>'|'!='|'in'|'not' 'in'|'is'|'is' 'not'
@@ -107,12 +132,12 @@ def p_comp_op(p):
             | EQ
             | NEQ
     '''
-    pass
+    p[0] = p[1]
 
 
 def p_assign_expr(p):
     '''expr : NAME ASSIGN expr'''
-    pass
+    p[0] = AST.Assign(p[1], p[3])
 
 # arith_expr: term (('+'|'-') term)*
 # term: factor (('*'|'@'|'/'|'%'|'//') factor)*
@@ -124,20 +149,24 @@ def p_expr(p):
             | factor MOD expr
             | factor
     '''
-    pass
+    if len(p) == 4:
+        p[0] = AST.BinOp(p[1], p[2], p[3])
+    else:
+        p[0] = p[1]
 
 # factor: ('+'|'-'|'~') factor | power
 def p_factor(p):
     '''factor : PLUS factor
             | MINUS factor
             | atom_expr'''
-    pass
+    if len(p) == 2:
+        p[0] = p[1]
 
 
 # atom_expr: [AWAIT] atom trailer*
 def p_atom_expr(p):
     '''atom_expr : atom'''
-    pass
+    p[0] = p[1]
 
 
 # atom: ('(' [yield_expr|testlist_comp] ')' |
@@ -154,7 +183,10 @@ def p_atom(p):
             | TRUE
             | FALSE
     '''
-    pass
+    if len(p) == 4:
+        p[0] = p[2]
+    else:
+        p[0] = p[1]
 
 
 # testlist_comp: (test|star_expr) ( comp_for | (',' (test|star_expr))* [','] )
@@ -179,7 +211,7 @@ def p_number(p):
     '''number : INT
             | FLOAT
     '''
-    pass
+    p[0] = AST.Number(p[1])
 
 
 def p_error(p):
@@ -207,3 +239,4 @@ else:
         file_input = content_file.read()
 
     result = parser.parse(file_input, debug=log)
+    print(result)
