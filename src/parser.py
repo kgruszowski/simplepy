@@ -5,7 +5,6 @@ import AST
 
 precedence = (
     ('nonassoc', 'LT', 'GT', 'LTE', 'GTE'),
-    ('left', 'NOT'),
     ('left', 'PLUS', 'MINUS'),
     ('left', 'TIMES', 'DIVIDE')
 )
@@ -177,14 +176,18 @@ def p_atom(p):
     '''atom : LPAREN list_expr RPAREN
             | LSQBRACK list_expr RSQBRACK
             | LBRACK dict_expr RBRACK
-            | NAME
+            | name
             | number
-            | STRING
+            | string
             | TRUE
             | FALSE
+            | NONE
     '''
-    if len(p) == 4:
-        p[0] = p[2]
+    if len(p) == 2:
+        if isinstance(p[1], AST.Number) or isinstance(p[1], AST.Str) or isinstance(p[1], AST.Name):
+            p[0] = p[1]
+        else:
+            p[0] = AST.Const(p[1])
     else:
         p[0] = p[1]
 
@@ -207,11 +210,21 @@ def p_dict_expr(p):
     pass
 
 
+def p_name(p):
+    '''name : NAME'''
+    p[0] = AST.Name(p[1])
+
+
 def p_number(p):
     '''number : INT
             | FLOAT
     '''
     p[0] = AST.Number(p[1])
+
+
+def p_string(p):
+    '''string : STRING'''
+    p[0] = AST.Str(p[1])
 
 
 def p_error(p):

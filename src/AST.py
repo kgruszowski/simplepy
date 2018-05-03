@@ -62,7 +62,25 @@ class BinOp(Node):
         self.op = op
 
 
+class Const(Node):
+    def __init__(self, value):
+        self.type = 'const'
+        self.value = value
+
+
+class Name(Node):
+    def __init__(self, value):
+        self.type = 'name'
+        self.value = value
+
+
 class Number(Node):
     def __init__(self, value):
         self.type = 'number'
+        self.value = value
+
+
+class Str(Node):
+    def __init__(self, value):
+        self.type = 'str'
         self.value = value

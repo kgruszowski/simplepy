@@ -2,7 +2,7 @@ b = 10
 c = 15
 
 if c < b: {
-    c = c + 1
+    c = None
 } else: {
     c = c - 1
 }

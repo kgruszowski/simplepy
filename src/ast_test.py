@@ -1,11 +1,8 @@
 import ast
 
-ast.Module
+ast.NameConstant
 
 tree = ast.parse('''
-a = 10
-
-if a > 15:
-    a = 8 + a * 5
+False
 ''')
 print(ast.dump(tree, annotate_fields=False))

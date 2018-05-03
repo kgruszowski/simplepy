@@ -4,7 +4,7 @@ tokens = [
     'NAME',
     'INT', 'FLOAT', 'STRING',
     'PLUS', 'MINUS', 'TIMES', 'DIVIDE', 'MOD', 'ASSIGN',
-    'GT', 'GTE', 'LT', 'LTE', 'EQ', 'NEQ', 'TRUE', 'FALSE',
+    'GT', 'GTE', 'LT', 'LTE', 'EQ', 'NEQ', 'TRUE', 'FALSE', 'NONE',
     'COLON', 'COMMA',
     'LPAREN', 'RPAREN', 'LBRACK', 'RBRACK', 'LSQBRACK', 'RSQBRACK',
     'NEWLINE'
@@ -21,7 +21,6 @@ reserved = {
     'else': 'ELSE',
     'and': 'AND',
     'or': 'OR',
-    'not': 'NOT',
 
     'while': 'WHILE'
 }
@@ -60,6 +59,12 @@ def t_TRUE(t):
 def t_FALSE(t):
     'False'
     t.value = False
+    return t
+
+
+def t_NONE(t):
+    'None'
+    t.value = None
     return t
 
 
