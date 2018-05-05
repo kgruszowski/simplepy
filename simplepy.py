@@ -1,8 +1,10 @@
 from simplepy.lexer import Lexer
 from simplepy.parser import Parser
+from simplepy.tree_printer import TreePrinter
 import ply.yacc as yacc
 import logging
 import sys
+
 
 logging.basicConfig(
     level = logging.DEBUG,

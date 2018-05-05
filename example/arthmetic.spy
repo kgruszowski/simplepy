@@ -1,7 +1,7 @@
-a + b
-a - b
-a * b
-a / b
-a = b
-a % b
-a = b + 10 * c
+a + b;
+a - b;
+a * b;
+a / b;
+a = b;
+a % b;
+a = b + 10 * c;

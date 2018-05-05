@@ -1,5 +1,7 @@
 class Node(object):
-    pass
+
+    def __str__(self):
+        return self.printTree()
 
 
 class Module(Node):
@@ -39,6 +41,7 @@ class BoolOp(Node):
         self.left = left
         self.right = right
 
+
 class Compare(Node):
     def __init__(self, left, op, right):
         self.type = 'compare'
@@ -64,11 +67,13 @@ class BinOp(Node):
 
 class List(Node):
     def __init__(self, values):
+        self.type = 'list'
         self.values = values
 
 
 class Tuple(Node):
     def __init__(self, values):
+        self.type = 'list'
         self.values = values
 
 
@@ -87,9 +92,9 @@ class Const(Node):
 
 
 class Name(Node):
-    def __init__(self, value):
+    def __init__(self, id):
         self.type = 'name'
-        self.value = value
+        self.id = id
 
 
 class Number(Node):

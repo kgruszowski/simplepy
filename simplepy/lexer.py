@@ -17,9 +17,8 @@ class Lexer(object):
         'INT', 'FLOAT', 'STRING',
         'PLUS', 'MINUS', 'TIMES', 'DIVIDE', 'MOD', 'ASSIGN',
         'GT', 'GTE', 'LT', 'LTE', 'EQ', 'NEQ', 'TRUE', 'FALSE', 'NONE',
-        'COLON', 'COMMA',
+        'COLON', 'SEMICOLON', 'COMMA',
         'LPAREN', 'RPAREN', 'LBRACK', 'RBRACK', 'LSQBRACK', 'RSQBRACK',
-        'NEWLINE'
     ]
 
     reserved = {
@@ -59,8 +58,12 @@ class Lexer(object):
     t_EQ = r'\=='
     t_NEQ = r'\!='
     t_COLON = r'\:'
+    t_SEMICOLON = r'\;'
     t_COMMA = r'\,'
-    t_NEWLINE = r'\n'
+
+    def t_newline(self, t):
+        r'\n+'
+        t.lexer.lineno += len(t.value)
 
     def t_TRUE(self, t):
         'True'

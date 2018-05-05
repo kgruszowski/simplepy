@@ -1,11 +1,11 @@
-a = 0
+a = 0;
 
 while a < 100: {
     if a % 2 == 0: {
-        print('odd')
+        a = 'odd';
     } else: {
-        print('even')
+        a = 'even';
     }
 }
 
-a = {id: 'KAM45', name: 'Kamil', age: 24}
+a = ['KAM45', 'Kamil'];
