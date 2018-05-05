@@ -1,0 +1,24 @@
+from simplepy.lexer import Lexer
+from simplepy.parser import Parser
+import ply.yacc as yacc
+import logging
+import sys
+
+logging.basicConfig(
+    level = logging.DEBUG,
+    filename = "parselog.txt",
+    filemode = "w",
+    format = "%(filename)10s:%(lineno)4d:%(message)s"
+)
+log = logging.getLogger()
+
+if len(sys.argv) == 1:
+    print("Usage: python3 %s filename" % __file__)
+else:
+    with open('example/{}'.format(sys.argv[1]), 'r') as content_file:
+        file_input = content_file.read()
+
+    lexer = Lexer()
+    parser = yacc.yacc(module=Parser)
+    result = parser.parse(file_input, debug=log, lexer=lexer)
+    print(result)
