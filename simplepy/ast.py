@@ -18,6 +18,12 @@ class StatementList(Node):
         self.statement_list.append(statement_list)
 
 
+class Print(Node):
+    def __init__(self, value):
+        self.type = 'print'
+        self.value = value
+
+
 class While(Node):
     def __init__(self, test, body, orelse):
         self.type = 'while'

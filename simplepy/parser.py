@@ -56,8 +56,8 @@ class Parser(object):
         p[0] = p[1]
 
     def p_print(p):
-        """print : PRINT LPAREN small_stmt RPAREN"""
-        pass
+        """print : PRINT LPAREN small_stmt RPAREN SEMICOLON"""
+        p[0] = AST.Print(p[3])
 
     # flow_stmt: break_stmt | continue_stmt | return_stmt | raise_stmt | yield_stmt
     def p_flow_stmt(p):

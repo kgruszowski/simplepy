@@ -6,7 +6,11 @@ d = a;
 if a == b: {
     if a < 10: {
         b = False;
+        print('false');
     } else: {
         b = True;
+        print('true');
     }
 }
+
+print('tree');

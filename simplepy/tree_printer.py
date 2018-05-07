@@ -110,6 +110,10 @@ class TreePrinter:
 
         return ret
 
+    @addToClass(AST.Print)
+    def printTree(self, level=0):
+        return LEVEL_TOKEN * level + 'PRINT \n' + self.value.printTree(level + 1)
+
     @addToClass(AST.StatementList)
     def printTree(self, level=0):
         ret = ""
