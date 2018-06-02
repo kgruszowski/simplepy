@@ -4,3 +4,5 @@ c = 15;
 while b < c: {
     b = b + 1;
 }
+
+print(b);

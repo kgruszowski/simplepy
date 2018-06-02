@@ -2,10 +2,11 @@ a = 0;
 
 while a < 100: {
     if a % 2 == 0: {
-        a = 'odd';
+        print('odd');
     } else: {
-        a = 'even';
+        print('even');
     }
+    a = a+1;
 }
 
 a = ['KAM45', 'Kamil'];

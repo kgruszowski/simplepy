@@ -157,12 +157,10 @@ class Parser(object):
 
     # atom: ('(' [yield_expr|testlist_comp] ')' |
     #        '[' [testlist_comp] ']' |
-    #        '{' [dictorsetmaker] '}' |
     #        NAME | NUMBER | STRING+ | '...' | 'None' | 'True' | 'False')
     def p_atom(p):
         """atom : LPAREN list_expr RPAREN
                 | LSQBRACK list_expr RSQBRACK
-                | LBRACK dict_expr RBRACK
                 | name
                 | number
                 | string
@@ -193,15 +191,6 @@ class Parser(object):
         else:
             p[1].add_expr_list(p[3])
             p[0] = p[1]
-
-    # dictorsetmaker: ( ((test ':' test | '**' expr)
-    #                   (comp_for | (',' (test ':' test | '**' expr))* [','])) |
-    #                  ((test | star_expr)
-    #                   (comp_for | (',' (test | star_expr))* [','])) )
-    def p_dict_expr(p):
-        """dict_expr : NAME COLON atom_expr COMMA dict_expr
-                    | NAME COLON atom_expr"""
-        pass
 
     def p_name(p):
         """name : NAME"""

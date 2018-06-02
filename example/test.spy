@@ -1,16 +1,8 @@
-c = 10;
-b = 10 + 11;
+a = 10;
 
-d = a;
-
-if a == b: {
-    if a < 10: {
-        b = False;
-        print('false');
-    } else: {
-        b = True;
-        print('true');
-    }
+if True == True: {
+    print(a);
+    a = a + 1;
+} else: {
+    print('nic');
 }
-
-print('tree');

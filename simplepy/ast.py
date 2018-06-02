@@ -1,7 +1,13 @@
 class Node(object):
 
-    def __str__(self):
-        return self.printTree()
+    # def __str__(self):
+    #     return self.printTree()
+
+    def accept(self, visitor, args=None):
+        if args is None:
+            return visitor.visit(self)
+        else:
+            return visitor.visit(self, args)
 
 
 class Module(Node):
