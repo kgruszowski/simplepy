@@ -7,6 +7,7 @@ pip3 install -r requirements.txt
 ```
 
 ### usage
+execute python script from main directory:
 ```
 $ python3 simplepy.py $program_name
 ```
