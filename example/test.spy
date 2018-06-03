@@ -1,8 +1,0 @@
-a = 10;
-
-if True == True: {
-    print(a);
-    a = a + 1;
-} else: {
-    print('nic');
-}

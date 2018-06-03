@@ -23,7 +23,6 @@ class Lexer(object):
 
     reserved = {
         'print': 'PRINT',
-        'def': 'DEF',
         'return': 'RETURN',
         'break': 'BREAK',
         'continue': 'CONTINUE',
@@ -42,7 +41,7 @@ class Lexer(object):
     t_PLUS = r'\+'
     t_MINUS = r'-'
     t_TIMES = r'\*'
-    t_DIVIDE = r'/'
+    t_DIVIDE = r'
     t_MOD = r'%'
     t_ASSIGN = r'='
     t_LPAREN = r'\('
@@ -97,7 +96,7 @@ class Lexer(object):
 
     def t_STRING(self, t):
         r'\'(?:\\"|.)*?\''
-        t.value = bytes(t.value.lstrip('"').rstrip('"'), "utf-8").decode("unicode_escape")
+        t.value = bytes(t.value.lstrip("'").rstrip("'"), "utf-8").decode("unicode_escape")
         return t
 
     def t_error(self, t):

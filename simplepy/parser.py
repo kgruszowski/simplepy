@@ -3,6 +3,7 @@ from simplepy.lexer import Lexer
 
 
 class Parser(object):
+    
     tokens = Lexer.tokens
 
     precedence = (
@@ -130,11 +131,11 @@ class Parser(object):
     # arith_expr: term (('+'|'-') term)*
     # term: factor (('*'|'@'|'/'|'%'|'//') factor)*
     def p_expr(p):
-        """expr : factor PLUS expr
-                | factor MINUS expr
-                | factor TIMES expr
-                | factor DIVIDE expr
-                | factor MOD expr
+        """expr : expr PLUS expr
+                | expr MINUS expr
+                | expr TIMES expr
+                | expr DIVIDE expr
+                | expr MOD expr
                 | factor
         """
         if len(p) == 4:
