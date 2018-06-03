@@ -12,4 +12,4 @@ execute python script from main directory:
 $ python3 simplepy.py $program_name
 ```
 
-where **$program_name** is name of file in *example* (e.g. while.spy). 
+where **$program_name** is name of file in *./example* (e.g. while.spy). 
