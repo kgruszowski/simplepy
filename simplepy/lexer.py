@@ -41,7 +41,7 @@ class Lexer(object):
     t_PLUS = r'\+'
     t_MINUS = r'-'
     t_TIMES = r'\*'
-    t_DIVIDE = r'
+    t_DIVIDE = r'/'
     t_MOD = r'%'
     t_ASSIGN = r'='
     t_LPAREN = r'\('
