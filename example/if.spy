@@ -1,0 +1,20 @@
+a = 10;
+b = 15;
+
+if a == b: {
+    print('problem');
+} else: {
+    print('ok');
+}
+
+if a < b: {
+    print('ok');
+} else: {
+    print('problem');
+}
+
+if a > b: {
+    print('problem');
+} else: {
+    print('ok');
+}
