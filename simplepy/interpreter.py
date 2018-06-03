@@ -69,7 +69,16 @@ class Interpreter(object):
     def visit(self, node):
         r1 = node.left.accept(self)
         r2 = node.right.accept(self)
-        return int(eval("a" + node.op + "b", {"a": r1, "b": r2}))
+
+        r1Str = str(r1)
+        r2Str = str(r2)
+        pos1 = r1Str.find('.')
+        pos2 = r2Str.find('.')
+
+        if pos1 != -1 or pos2 != -1:
+            return float(eval("a" + node.op + "b", {"a": r1, "b": r2}))
+        else:
+            return int(eval("a" + node.op + "b", {"a": r1, "b": r2}))
 
     @when(AST.List)
     def visit(self, node):
@@ -96,7 +105,13 @@ class Interpreter(object):
 
     @when(AST.Number)
     def visit(self, node):
-        return int(node.value)
+        numStr = str(node.value)
+        pos = numStr.find('.')
+
+        if pos != -1:
+            return float(node.value)
+        else:
+            return int(node.value)
 
     @when(AST.Str)
     def visit(self, node):
